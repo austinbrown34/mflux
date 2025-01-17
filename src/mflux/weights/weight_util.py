@@ -31,6 +31,9 @@ class WeightUtil:
         t5_text_encoder: nn.Module,
         clip_text_encoder: nn.Module,
     ) -> int | None:
+        if weights.meta_data.quantization_level == "None":
+            weights.meta_data.quantization_level = None
+            
         if weights.meta_data.quantization_level is None and quantize_arg is None:
             WeightUtil._set_model_weights(weights, vae, transformer, t5_text_encoder, clip_text_encoder)
             return None
@@ -55,6 +58,9 @@ class WeightUtil:
         weights: "WeightHandlerControlnet",
         transformer_controlnet: nn.Module,
     ) -> int | None:
+        if weights.meta_data.quantization_level == "None":
+            weights.meta_data.quantization_level = None
+            
         if weights.meta_data.quantization_level is None and quantize_arg is None:
             transformer_controlnet.update(weights.controlnet_transformer)
             return None
